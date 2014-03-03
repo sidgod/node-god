@@ -4,10 +4,10 @@ fs.readFile('./README.md', function(err, data){
     else console.log(data.toString());
 });
 
-var stream = fs.createReadStream('./README.md')
+var stream = fs.createReadStream('./README.md');
 stream.on('data', function(chunk){
-    console.log(chunk.toString())
-})
+    console.log(chunk.toString());
+});
 stream.on('end', function() {
-    console.log("File read has finished")
-})
+    console.log("File read has finished");
+});
