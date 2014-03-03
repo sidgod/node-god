@@ -1,14 +1,16 @@
-var http = require("http");
-var url = require("url");
+var http = require('http');
+var fs = require('fs');
+var path = require('path');
+var mime = require('mime');
+var cache = { };
 
-function onRequest(req, res) {
-    var pathname = url.parse(req.url).pathname;
-    console.log("Received request for " + pathname);
-    res.writeHead(200, {"Content-Type": "text/plain"});
-    res.write("Hello SidGod");
-    res.end();
+function send404(response) {
+    response.writeHead(404, {'Content-Type': 'text/plain'});
+    response.write('Error 404: resource not found');
+    response.end();
 }
 
-http.createServer(onRequest).listen(process.env.PORT);
-
-console.log("Started HTTP server at port = " + process.env.PORT);
+function sendFile(response, filePath, fileContents) {
+    response.writeHead(200, {'Content-Type': mime.lookup(path.basename(filePath))});
+    response.end(fileContents);
+}
